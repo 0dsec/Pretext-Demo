@@ -59,7 +59,6 @@ function draw() {
       const rightStart = Math.min(colEnd, mx + chord);
       const rightW     = Math.max(0, colEnd - rightStart);
 
-      // left segment — right-aligned so it butts flush against the circle
       if (leftW >= MIN_W) {
         const line = layoutNextLine(prepared, cursor, leftW);
         if (!line) break;
@@ -69,15 +68,13 @@ function draw() {
         cursor = line.end;
       }
 
-      // right segment — left-aligned, anchored at circle edge
       if (rightW >= MIN_W) {
         const line = layoutNextLine(prepared, cursor, rightW);
         if (!line) break;
         ctx.fillText(line.text, rightStart, textY);
         cursor = line.end;
       }
-
-      // circle neeeds to swallow the full line — advance cursor so text doesn't stall
+      
       if (leftW < MIN_W && rightW < MIN_W) {
         const line = layoutNextLine(prepared, cursor, colW);
         if (!line) break;
